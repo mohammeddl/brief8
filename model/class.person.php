@@ -35,6 +35,10 @@ class Persons
                 $_SESSION['user_id'] = $row['id'];
                 $_SESSION['user_name'] = $row['Nom'];
                 $_SESSION['user_role'] = $row['Role'];
+                $_SESSION['Email'] = $row['Email'];
+                $_SESSION['equipe_ID'] = $row['equipe_ID'];
+                $_SESSION['project_ID'] = $row['project_ID'];
+
                 
                 echo "Login successful. Welcome, {$_SESSION['user_name']}!";
 
@@ -44,6 +48,7 @@ class Persons
                         header("Location: ../view/ScrumMaster.php");
                         exit;
                     case "member":
+
                         $_SESSION['status'] = 'member';
                         header("Location: ../view/user.php");
                         exit;
@@ -115,9 +120,9 @@ public function getTeams() {
     return $row;
 }
 
-public function getTeamMembers() {
+public function getTeamMembers($equipesid) {
     $conn = $this->db->getConnection();
-    $sql = "SELECT * FROM persons JOIN equipes WHERE persons.equipe_ID = equipes.id";
+    $sql = "SELECT * FROM persons JOIN equipes WHERE persons.equipe_ID = $equipesid";
     $stmt = $conn->query($sql);
     $data = array();
 

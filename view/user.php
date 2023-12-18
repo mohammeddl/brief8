@@ -1,19 +1,25 @@
 
 <?php
+session_start();
 include "../model/class.person.php";
 include "../model/classproject.php";
 
-  session_start();
-if($_SESSION['user_role']!= 'member'){
-  header("Location: login.php");
+if ($_SESSION['user_role'] != 'member') {
+    header("Location: login.php");
 }
 
-
 $team = new Persons();
-$data = $team->getTeamMembers();
-$row = $team->getTeams();
 
-echo "Login successful. Welcome, {$_SESSION['user_name']}!";
+
+if (isset($_SESSION['equipe_ID']) && $_SESSION['equipe_ID'] !== null) {
+    $data = $team->getTeamMembers($_SESSION['equipe_ID']);
+    $row = $team->getTeams();
+    echo "Login successful. Welcome, {$_SESSION['user_name']}!";
+} else {
+
+    echo "Error: you dont have the equipe !!!";
+
+}
 ?>
 
 <!DOCTYPE html>
