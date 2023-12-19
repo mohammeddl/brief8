@@ -58,7 +58,7 @@ if (isset($_POST['submitLogin'])) {
             </div>
   
               <div class="text-sm">
-                <a href="../view/create.php" class="font-medium text-[#24698b] hover:text-indigo-500">
+                <a href="signin.php" class="font-medium text-[#24698b] hover:text-indigo-500">
                 Create an account 
                 </a>
               </div>

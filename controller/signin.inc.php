@@ -1,6 +1,5 @@
 <?php
 include "../model/class.person.php";
-include "../controller/config.php";
 $persons = new Persons();
 $persons->__construct(new db());
 

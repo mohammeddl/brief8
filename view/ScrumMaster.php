@@ -1,29 +1,23 @@
 <?php
+//  
+include "../model/class.scrum.php";
 
 session_start();
 if ($_SESSION['user_role'] != 'ScrumMaster') {
     header("Location: signin.php");
 }
-include 'config.php';
 
-function dd($data)
-{
-    echo '<pre>';
-    print_r($data);
-    echo '</pre>';
-    exit;
-}
-
-
+$person = new Persons();
+$scrumMaster = new scrum();
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["submitName"])) {
         $teamName = $_POST["teamName"];
-
-        $sqlAddName = "INSERT INTO equipes ( nameTeams) VALUES(:teamName)";
-        $stmt = $pdo->prepare($sqlAddName);
-        $stmt->bindParam(':teamName', $teamName);
-        $stmt->execute();
+        $scrumMaster->getNameTeam($teamName);
+        // $sqlAddName = "INSERT INTO equipes ( nameTeams) VALUES(:teamName)";
+        // $stmt = $pdo->prepare($sqlAddName);
+        // $stmt->bindParam(':teamName', $teamName);
+        // $stmt->execute();
     }
 
     if (isset($_POST["submitAddMember"])) {
@@ -70,9 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 }
 
-$dataE = getAllEquipes($pdo);
-$dataP = getAllPersons($pdo);
-$dataProject = getAllProjects($pdo);
+$dataP = $person-> getAllPersons();
+// $dataE = getAllEquipes();
+// $dataProject = getAllProjects();
 ?>
 
 
