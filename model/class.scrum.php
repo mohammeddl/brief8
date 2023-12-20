@@ -42,7 +42,6 @@ class scrum extends Persons
 
 
     }
- 
 
     public function getNameTeam($teamName){
         $conn = $this->db->getConnection();

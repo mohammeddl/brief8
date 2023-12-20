@@ -9,5 +9,5 @@ class Equipe {
         $this->scrumMasterID = $scrumMasterID;
     }
 
-    // Add getters and setters as needed
+    
 }

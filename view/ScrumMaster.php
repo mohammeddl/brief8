@@ -1,6 +1,7 @@
 <?php
 //  
 include "../model/class.scrum.php";
+include "../model/classproject.php";
 
 session_start();
 if ($_SESSION['user_role'] != 'ScrumMaster') {
@@ -9,15 +10,14 @@ if ($_SESSION['user_role'] != 'ScrumMaster') {
 
 $person = new Persons();
 $scrumMaster = new scrum();
+$projects = new Projects();
+
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["submitName"])) {
         $teamName = $_POST["teamName"];
         $scrumMaster->getNameTeam($teamName);
-        // $sqlAddName = "INSERT INTO equipes ( nameTeams) VALUES(:teamName)";
-        // $stmt = $pdo->prepare($sqlAddName);
-        // $stmt->bindParam(':teamName', $teamName);
-        // $stmt->execute();
     }
 
     if (isset($_POST["submitAddMember"])) {
@@ -65,8 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 }
 
 $dataP = $person-> getAllPersons();
-// $dataE = getAllEquipes();
-// $dataProject = getAllProjects();
+$dataProject = $projects-> getAllProjects();
+$dataE = $scrumMaster->getAllEquipes();
 ?>
 
 
@@ -82,7 +82,7 @@ $dataP = $person-> getAllPersons();
 <nav class=" fixed flex justify-between bg-[#24698b] text-white w-full">
         <div class="xl:px-11 justify-between flex w-full items-center">
             <a class="text-3xl font-bold font-heading" href="#">
-                <img class="h-[70px] logo" src="img/logo.png" alt="logo"></a>
+                <img class="h-[70px] logo" src="../img/logo.png" alt="logo"></a>
 
             <ul class="hidden md:flex px-10 ml-auto font-semibold font-heading space-x-12 max-md:gap-80 max-md:absolute max-md:right-0 max-md:top-[84px] max-md:bg-gray-950 max-md:h-[400px] max-md:w-[200px]"
                 id="nav-links">
@@ -225,7 +225,7 @@ foreach ($dataE as $equipe) {
                 </div>
             </li>
         </ul>
-    </div>
+    </div> 
 <?php
 }
 ?>
