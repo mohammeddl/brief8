@@ -1,5 +1,5 @@
 <?php
-include "class.person.php";
+require_once "class.person.php";
 
 class scrum extends Persons
 {

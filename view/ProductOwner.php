@@ -1,7 +1,8 @@
 <?php
 
-include "../model/class.person.php";
-include "../model/classproject.php";
+require_once  "../model/class.person.php";
+require_once  "../model/classproject.php";
+require_once "../model/class.productO.php";
 
 session_start();
 if($_SESSION['user_role']!= 'ProductOwner'){
@@ -14,27 +15,42 @@ $data = $person-> getAllPersons();
 $project = new Projects();
 $dataP = $project-> getAllProjects();
 
+$productOwner = new ProductOwner();
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   if (isset($_POST['submitProject'])) {
       $name = $_POST['name_project'];
       $startDate = $_POST['Start_date'];
       $endDate = $_POST['End_date'];
       $project->addProject($name, $startDate, $endDate);
+
   } elseif (isset($_POST['submitEditProject'])) {
       $id = $_POST['id_project'];
       $name = $_POST['name_project'];
       $startDate = $_POST['Start_date'];
       $endDate = $_POST['End_date'];
+      
   } elseif (isset($_POST['toggleRole'])) {
       $id = $_POST['id'];
       $role = $_POST['role'];
+      $newRole = ($role == 'member') ? 'ScrumMaster' : 'member';
+      $productOwner->getToggleRole($newRole,$id);
+      header("refresh:0.1");
+
   } elseif (isset($_POST['assignScrumMaster'])) {
       $projectId = $_POST['projectId'];
       $scrumMasterId = $_POST['scrumMasterId'];
+      $sqlAssignScrumMaster = "UPDATE persons SET role = 'ScrumMaster', project_ID = :projectId WHERE id = :scrumMasterId";
+      $params = [':projectId' => $projectId, ':scrumMasterId' => $scrumMasterId];
+      $db->query($sqlAssignScrumMaster, $params);
+
   } elseif (isset($_POST['submitDelete'])) {
       $id = $_POST['id_project'];
   }
 }
+
+
+
 
 ?>
 
