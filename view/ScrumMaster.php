@@ -23,47 +23,28 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (isset($_POST["submitAddMember"])) {
         $teamName = $_POST["teamNameSelect"];
         $memberid = $_POST["memberName"];
-        $sqlAddMember = "UPDATE persons SET equipe_ID = :teamName WHERE id = :memberid";
-        $stmt = $pdo->prepare($sqlAddMember);
-        $stmt->bindParam(':teamName', $teamName);
-        $stmt->bindParam(':memberid', $memberid);
-        $stmt->execute();
+        $scrumMaster->getAddMember($teamName,$memberid);
     }
 
     if (isset($_POST["submitRemove"])) {
         $memberid = $_POST["memberName"];
-        $sqlRemoveMember = "UPDATE persons SET equipe_ID = NULL WHERE id = :memberid";
-        $stmt = $pdo->prepare($sqlRemoveMember);
-        $stmt->bindParam(':memberid', $memberid);
-        $stmt->execute();
+        $scrumMaster->getRemoveMember($memberid);
     }
 
     // delete team
     if (isset($_POST["deleteTeam"])) {
         $teamId = $_POST["teamId"];
-        $sqlRemoveMembers = "UPDATE persons SET equipe_ID = NULL WHERE equipe_ID = :teamId";
-        $stmt = $pdo->prepare($sqlRemoveMembers);
-        $stmt->bindParam(':teamId', $teamId);
-        $stmt->execute();
-
-        $sqlDeleteTeam = "DELETE FROM equipes WHERE id = :teamId";
-        $stmt = $pdo->prepare($sqlDeleteTeam);
-        $stmt->bindParam(':teamId', $teamId);
-        $stmt->execute();
+        $scrumMaster->getRemoveTeam($teamId);
     }
 
     // select equipe to project
     if (isset($_POST["submitAddProject"])) {
         $teamName = $_POST["projectNameSelect"];
         $SelectProject = $_POST["teamNameSelectProject"];
-        $sqlSelect = "UPDATE equipes SET project_ID = :teamName WHERE id = :SelectProject";
-        $stmt = $pdo->prepare($sqlSelect);
-        $stmt->bindParam(':teamName', $teamName);
-        $stmt->bindParam(':SelectProject', $SelectProject);
-        $stmt->execute();
+        $scrumMaster->getSelect($teamName,$SelectProject);
     }
 }
-
+//display
 $dataP = $person-> getAllPersons();
 $dataProject = $projects-> getAllProjects();
 $dataE = $scrumMaster->getAllEquipes();
