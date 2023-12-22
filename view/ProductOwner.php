@@ -40,9 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   } elseif (isset($_POST['assignScrumMaster'])) {
       $projectId = $_POST['projectId'];
       $scrumMasterId = $_POST['scrumMasterId'];
-      $sqlAssignScrumMaster = "UPDATE persons SET role = 'ScrumMaster', project_ID = :projectId WHERE id = :scrumMasterId";
-      $params = [':projectId' => $projectId, ':scrumMasterId' => $scrumMasterId];
-      $db->query($sqlAssignScrumMaster, $params);
+      $productOwner->getAssignScrum($projectId,$scrumMasterId);
 
   } elseif (isset($_POST['submitDelete'])) {
       $id = $_POST['id_project'];

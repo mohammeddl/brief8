@@ -20,5 +20,18 @@ class ProductOwner extends Persons
         $stmt->execute();
     }
 
+    public function getAssignScrum($projectId,$scrumMasterId){
+        $conn = $this->db->getConnection();
+        $req = "UPDATE persons SET role = 'ScrumMaster', project_ID = :projectId WHERE id = :scrumMasterId";
+        $stmt = $conn->prepare($req);
+        $stmt->bindParam(':projectId',$projectId);
+        $stmt->bindParam(':scrumMasterId',$scrumMasterId);
+        $stmt->execute();
+    }
+
+
+
+
+
 
 }

@@ -1,16 +1,16 @@
 <?php
 session_start();     
-include '../model/class.person.php';  
+require_once '../model/class.person.php';  
 
 $error = '';
 
 
+$login = new Persons(); 
 
 if (isset($_POST['submitLogin'])) {
     $email = $_POST['email'];
     $pass = $_POST['pass'];
 
-    $login = new Persons(); 
     $result = $login->authenticate($email, $pass);
 
 }
